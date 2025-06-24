@@ -4,11 +4,18 @@ import { connectDB } from "./config/db.js";
 // import Product from "./models/product.models.js";
 // import mongoose from "mongoose";
 import productRoutes from "./routes/product.route.js";
+const cors = require("cors");
 
 
 dotenv.config();
 
 const app = express();
+
+app.use(cors({
+  origin: "https://product-store-murex.vercel.app", // allow your frontend domain
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
 
 const PORT = process.env.PORT || 5000
 
