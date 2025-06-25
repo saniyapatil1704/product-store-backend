@@ -8,11 +8,8 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors({
-  origin: "https://product-store-murex.vercel.app", // ✅ allow Vercel frontend
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true
-}));
+app.use(cors()); // Allow all origins temporarily
+
 
 const PORT = process.env.PORT || 5000;
 
