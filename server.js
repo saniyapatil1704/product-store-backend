@@ -10,7 +10,7 @@ const app = express();
 
 // ✅ CORS MUST BE VERY EARLY
 app.use(cors({
-  origin: "*", // 🔁 For now, allow all origins (test only!)
+  origin: "https://product-store-murex.vercel.app", // ✅ your Vercel frontend only
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type"],
 }));
