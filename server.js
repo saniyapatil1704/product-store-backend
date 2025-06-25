@@ -1,6 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-import cors from "cors"; // ✅ use import not require
+import cors from "cors";
 import { connectDB } from "./config/db.js";
 import productRoutes from "./routes/product.route.js";
 
@@ -8,17 +8,31 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors()); // Allow all origins temporarily
+// ✅ CORS MUST BE VERY EARLY
+app.use(cors({
+  origin: "*", // 🔁 For now, allow all origins (test only!)
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type"],
+}));
 
-
-const PORT = process.env.PORT || 5000;
+// ✅ Preflight handler (optional but safe)
+app.options("*", cors());
 
 app.use(express.json());
 
+// ✅ Routes
 app.use("/api/products", productRoutes);
 
+// ✅ Test route
+app.get("/", (req, res) => {
+  res.send("🚀 API is live and CORS is working!");
+});
+
+const PORT = process.env.PORT || 5000;
+
+// ✅ Connect DB and start server
 connectDB().then(() => {
   app.listen(PORT, () => {
-    console.log("Server started at http://localhost:" + PORT);
+    console.log(`Server running on http://localhost:${PORT}`);
   });
 });
